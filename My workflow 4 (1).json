@@ -1,0 +1,119 @@
+{
+  "name": "My workflow 4",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "f9d81b40-0ebb-42f9-9ca5-c2f1668587bc",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -304,
+        48
+      ],
+      "id": "32d991d3-1fde-405a-9bca-18ec219bf45c",
+      "name": "Webhook",
+      "webhookId": "f9d81b40-0ebb-42f9-9ca5-c2f1668587bc"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=\n {{ $json.body.message }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -96,
+        48
+      ],
+      "id": "8b955851-1fff-4484-8199-eeca0224bf37",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "respondWith": "allIncomingItems",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        256,
+        48
+      ],
+      "id": "a25ea717-918c-4c74-8803-2fbb5574248a",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -96,
+        288
+      ],
+      "id": "cfabb5f5-6d61-4940-b8e6-9caa287bdea5",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "02Bu6MsHhYCk5kWQ",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "c57b2a02-f9ba-4d3c-81d4-9790681ebee8",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "842154d7b3e253959fbdcbcbc6de601afc16717b027bd1a8535ea34f23de8739"
+  },
+  "id": "IojR8moqn3Vg6BvK",
+  "tags": []
+}
